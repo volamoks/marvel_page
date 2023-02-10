@@ -1,54 +1,36 @@
 import './charInfo.scss';
 import thor from '../../resources/img/thor.jpeg';
 import { Component, useEffect, useState } from 'react';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/errorMessage';
 import Skeleton from '../skeleton/Skeleton';
 
 const CharInfo = props => {
     const [char, setChar] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
 
-    const marvelResourse = new MarvelService();
+    const { loading, error, getChracter, clearError } = useMarvelService();
 
     useEffect(() => {
         updateChar();
     }, []);
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (this.props.charId !== prevProps.charId) {
-    //         this.updateChar();
-    //         // console.log('change');
-    //     }
-    // }
 
     useEffect(() => {
         updateChar();
     }, [props.charId]);
 
     const updateChar = () => {
+        clearError();
         const { charId } = props;
         if (!charId) {
             return;
         }
-        onCharLoading();
 
-        marvelResourse.getChracter(charId).then(onCharLoaded).catch(onError);
+        getChracter(charId).then(onCharLoaded);
     };
 
     const onCharLoaded = char => {
         setChar(char);
-        setLoading(false);
-    };
-
-    const onCharLoading = () => {
-        setLoading(true);
-    };
-    const onError = () => {
-        setLoading(false);
-        setError(false);
     };
 
     const skeleton = char || loading || error ? null : <Skeleton />;
