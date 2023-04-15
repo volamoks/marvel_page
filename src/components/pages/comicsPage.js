@@ -4,7 +4,7 @@ import ComicsList from '../comicsList/ComicsList';
 const ComicsPage = () => {
     return (
         <>
-            <AppHeader />
+            {/* <AppHeader /> */}
             <ComicsList />
         </>
     );

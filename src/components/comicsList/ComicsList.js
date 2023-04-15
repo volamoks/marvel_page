@@ -34,8 +34,6 @@ const ComicsList = () => {
     };
 
     function Content(arr) {
-        // const { title, descr, thumbnail, price } = this.props;
-
         const items = arr.map((item, i) => {
             return (
                 <li
